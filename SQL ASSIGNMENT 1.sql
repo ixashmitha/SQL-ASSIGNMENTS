@@ -1,4 +1,5 @@
 CREATE DATABASE college_db;
+/*TASK 1.1*/
 CREATE TABLE students(
 student_id BIGINT,
 FullName varchar(255),
@@ -8,17 +9,20 @@ join_date DATE,
 active_flag BIT DEFAULT '1',
 PRIMARY KEY (student_id)
 );
+/*TASK 1.2*/
 CREATE TABLE courses(
 course_id INT,
 course_name varchar(255) NOT NULL,
 fees DECIMAL
 );
+/*TASK 1.3*/
 CREATE TABLE enrollments(
 enroll_id BIGINT PRIMARY KEY,
 student_id BIGINT,
 course_id INT,
 enroll_timestamp TIMESTAMP
 );
+/*TASK 2.1*/
 INSERT INTO students(student_id,FullName,email,Age,join_date,active_flag)
 VALUES
 (1001, 'Ashmitha', 'ashmitha.@gmail.com', 21, '2024-06-15', 1),
@@ -31,6 +35,7 @@ VALUES
 (1008, 'Kiran Mehta', 'kiran.mehta@gmail.com', 21, '2024-02-25', 0),
 (1009, 'Anjali Verma', 'anjali.verma@yahoo.com', 20, '2024-01-30', 1),
 (1010, 'Suresh Rao', 'suresh.rao@gmail.com', 23, '2024-10-01', 1);
+/*TASK 2.2*/
 INSERT INTO courses(course_id,course_name,fees)
 VALUES
 (1, 'Java Programming', 15000.00),
@@ -38,6 +43,7 @@ VALUES
 (3, 'Web Development', 20000.00),
 (4, 'Database Management Systems', 12000.00),
 (5, 'Artificial Intelligence Basics', 25000.00);
+/*TASK 2.3*/
 INSERT INTO enrollments(enroll_id,student_id,course_id,enroll_timestamp)
 VALUES
 (5001, 1001, 1, DEFAULT),
@@ -55,6 +61,7 @@ VALUES
 (5013, 1008, 4, DEFAULT),
 (5014, 1009, 2, DEFAULT),
 (5015, 1010, 5, DEFAULT);
+/*TASK 3.1*/
 INSERT INTO students(student_id,FullName,email,Age,join_date,active_flag)
 VALUES
 (1011, 'Ramesh Naidu', 'ramesh.naidu@gmail.com', 22, '2024-11-01', 1),
@@ -69,6 +76,7 @@ VALUES
 (5031, 1011, 3, DEFAULT),
 (5032, 1012, 2, DEFAULT),
 (5033, 1012, 4, DEFAULT);
+/*TASK 3.2*/
 SELECT * FROM students;
 SELECT FullName, email FROM students;
 SELECT Age FROM students 
@@ -76,6 +84,7 @@ ORDER BY Age DESC;
 SELECT  TOP 5 join_date FROM students;
 SELECT DISTINCT Age FROM students;
 SELECT DISTINCT course_name FROM courses;
+/*TASK 3.3*/
 UPDATE students
 SET Age=26
 WHERE student_id=1006;
@@ -116,12 +125,15 @@ WHERE enroll_id BETWEEN 5004 AND 5015
 SELECT * FROM enrollments;
 DELETE FROM enrollments
 WHERE enroll_time < '2024-07-01';
+/*TASK 3.4*/
 ALTER TABLE students
 ALTER COLUMN Fullname varchar(200);
 EXEC sp_rename 'students.join_date','registration_date','COLUMN';
 ALTER TABLE students
 ADD phone_number VARCHAR(15);
+
 DROP TABLE enrollments1;
+/*TASK 4.1*/
 SELECT Age FROM students
 WHERE Age>21;
 SELECT FullName FROM students
@@ -131,18 +143,21 @@ WHERE fees BETWEEN 1000 AND 5000;
 SELECT * FROM courses;
 SELECT FullName FROM students
 WHERE Age IN(20,22,25);
+/*TASK 4.2*/
 SELECT FullName FROM students
 WHERE Age>20 AND active_flag=1;
 SELECT FullName FROM students
 WHERE Age < 20 OR active_flag=0;
 SELECT course_name FROM courses
 WHERE fees > 2000 AND course_name LIKE '%Data%' ;
+/*TASK 4.3*/
 SELECT email FROM students
 WHERE email LIKE '%gmail.com%';
 SELECT course_name FROM courses
 WHERE course_name LIKE '%data%';
 SELECT course_name FROM courses
 WHERE course_name LIKE '%new%';
+/*TASK 4.4*/
 INSERT INTO students (student_id, FullName, email, Age, registration_date, active_flag)
 VALUES
 (1014, 'Manoj Krishna', 'manoj.krishna@gmail.com', NULL, '2024-11-15', 1);
@@ -150,14 +165,17 @@ SELECT Age FROM students
 WHERE Age IS NULL;
 SELECT Age FROM students
 WHERE Age IS NOT NULL;
+/*TASK 5.1*/
 SELECT COUNT(student_id)
 FROM students
 WHERE active_flag=1;
+/*TASK 5.2*/
 SELECT SUM(fees)
 FROM courses
 WHERE FEES>20000;
 SELECT AVG(fees)
 FROM courses;
+/*TASK 5.3*/
 SELECT MIN(Age)
 FROM students;
 SELECT MAX(fees)
@@ -166,6 +184,7 @@ SELECT MAX(registration_date) AS oldestjoin_date
 FROM students;
 SELECT MIN(registration_date) AS Latestjoin_date
 FROM students;
+/*TASK 5.4*/
 SELECT COUNT(active_flag), FullName
 FROM students
 GROUP BY FullName;
@@ -175,6 +194,7 @@ GROUP BY FullName;
 SELECT COUNT(fees), course_name
 FROM courses
 GROUP BY course_name;
+/*TASK 5.5*/
 SELECT COUNT(course_id), course_id
 FROM enrollments
 GROUP BY course_id
